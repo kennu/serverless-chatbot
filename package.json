@@ -1,0 +1,13 @@
+{
+  "name": "Chatbot",
+  "version": "0.0.1",
+  "description": "Serverless chatbot application boilerplate",
+  "author": "me",
+  "license": "MIT",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/"
+  },
+  "dependencies": {}
+}
