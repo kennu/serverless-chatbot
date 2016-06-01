@@ -1,5 +1,12 @@
 {
   "name": "Chatbot",
-  "custom": {},
-  "plugins": []
+  "custom": {
+    "meta": {
+      "name": "chatbot-serverless",
+      "region": "eu-west-1"
+    }
+  },
+  "plugins": [
+    "serverless-meta-sync"
+  ]
 }

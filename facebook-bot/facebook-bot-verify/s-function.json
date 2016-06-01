@@ -1,0 +1,78 @@
+{
+  "name": "facebook-bot-verify",
+  "runtime": "nodejs4.3",
+  "description": "Verify Facebook Messenger chat bot tokens",
+  "customName": false,
+  "customRole": false,
+  "handler": "facebook-bot-verify/handler.handler",
+  "timeout": 6,
+  "memorySize": 1024,
+  "authorizer": {},
+  "custom": {
+    "excludePatterns": [],
+    "cors": {
+      "allowOrigin": "*",
+      "allowHeaders": ["Content-Type", "X-Amz-Date", "Authorization", "X-Api-Key"]
+    }
+  },
+  "endpoints": [
+    {
+      "path": "facebook-bot/webhook",
+      "method": "GET",
+      "type": "AWS",
+      "authorizationType": "none",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {
+        "integration.request.querystring.hub.verify_token": "method.request.querystring.hub.verify_token",
+        "integration.request.querystring.hub.challenge": "method.request.querystring.hub.challenge"
+      },
+      "requestTemplates": {
+        "application/json": "{\"verifyToken\":\"$input.params('hub.verify_token')\",\"challenge\":\"$input.params('hub.challenge')\"}"
+      },
+      "responses": {
+        "^400.*": {
+          "statusCode": "400",
+          "responseParameters": {
+            "method.response.header.Access-Control-Allow-Origin": "'*'"
+          }
+        },
+        "^401.*": {
+          "statusCode": "401",
+          "responseParameters": {
+            "method.response.header.Access-Control-Allow-Origin": "'*'"
+          }
+        },
+        "^404.*": {
+          "statusCode": "404",
+          "responseParameters": {
+            "method.response.header.Access-Control-Allow-Origin": "'*'"
+          }
+        },
+        "[^0-9].*": {
+          "statusCode": "500",
+          "responseParameters": {
+            "method.response.header.Access-Control-Allow-Origin": "'*'"
+          }
+        },
+        "default": {
+          "statusCode": "200",
+          "responseParameters": {
+            "method.response.header.Access-Control-Allow-Origin": "'*'",
+            "method.response.header.Content-Type": "'text/plain'"
+          },
+          "responseModels": {},
+          "responseTemplates": {
+            "text/plain": "$input.path('$.response')"
+          }
+        }
+      }
+    }
+  ],
+  "events": [],
+  "environment": "$${environment}",
+  "vpc": {
+    "securityGroupIds": [],
+    "subnetIds": []
+  }
+}
