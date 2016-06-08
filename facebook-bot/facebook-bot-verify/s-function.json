@@ -17,7 +17,7 @@
   },
   "endpoints": [
     {
-      "path": "facebook-bot/webhook",
+      "path": "facebook-bot/verify",
       "method": "GET",
       "type": "AWS",
       "authorizationType": "none",
