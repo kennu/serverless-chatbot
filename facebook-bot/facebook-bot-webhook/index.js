@@ -96,9 +96,10 @@ function receiveMessage(event) {
 }
 
 function receiveMessages(entries) {
-  const promise = Promise.resolve()
-  (entries || []).map(entry => {
-    (entry.messaging || []).map(event => {
+  let promise = Promise.resolve()
+  entries.map(entry => {
+    const messaging = entry.messaging || []
+    messaging.map(event => {
       promise = promise.then(() => {
         if (event.postback) {
           return receivePostback(event)
@@ -109,7 +110,7 @@ function receiveMessages(entries) {
     })
   })
   return promise
-  then(() => {
+  .then(() => {
     return {}
   })
   .then(null, (err) => {
@@ -119,5 +120,5 @@ function receiveMessages(entries) {
 }
 
 module.exports.respond = function(event) {
-  return receiveMessages(event.entry)
+  return receiveMessages(event.entry || [])
 }
