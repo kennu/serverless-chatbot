@@ -48,6 +48,50 @@
           }
         ]
       }
+    },
+    "SQSIncomingMessages": {
+      "Type": "AWS::SQS::Queue",
+      "Properties": {
+        "QueueName": "${project}-IncomingMessages-${stage}",
+        "RedrivePolicy": {
+          "deadLetterTargetArn": {"Fn::GetAtt": ["SQSIncomingDeadMessages", "Arn"]},
+          "maxReceiveCount": 10
+        }
+      }
+    },
+    "SNSIncomingMessages": {
+      "Type": "AWS::SNS::Topic",
+      "Properties": {
+        "TopicName": "${project}-IncomingMessages-${stage}"
+      }
+    },
+    "SQSIncomingDeadMessages": {
+      "Type": "AWS::SQS::Queue",
+      "Properties": {
+        "QueueName": "${project}-IncomingDeadMessages-${stage}"
+      }
+    },
+    "SQSOutgoingMessages": {
+      "Type": "AWS::SQS::Queue",
+      "Properties": {
+        "QueueName": "${project}-OutgoingMessages-${stage}",
+        "RedrivePolicy": {
+          "deadLetterTargetArn": {"Fn::GetAtt": ["SQSOutgoingDeadMessages", "Arn"]},
+          "maxReceiveCount": 10
+        }
+      }
+    },
+    "SNSOutgoingMessages": {
+      "Type": "AWS::SNS::Topic",
+      "Properties": {
+        "TopicName": "${project}-OutgoingMessages-${stage}"
+      }
+    },
+    "SQSOutgoingDeadMessages": {
+      "Type": "AWS::SQS::Queue",
+      "Properties": {
+        "QueueName": "${project}-OutgoingDeadMessages-${stage}"
+      }
     }
   },
   "Outputs": {
@@ -59,6 +103,54 @@
           "Arn"
         ]
       }
+    },
+    "IncomingMessagesQueueUrl": {
+      "Description": "Queue URL",
+      "Value": { "Ref": "SQSIncomingMessages" }
+    },
+    "IncomingMessagesQueueArn": {
+      "Description": "Queue ARN",
+      "Value": { "Fn::GetAtt": ["SQSIncomingMessages", "Arn"] }
+    },
+    "IncomingMessagesTopicArn": {
+      "Description": "Topic ARN",
+      "Value": { "Ref": "SNSIncomingMessages" }
+    },
+    "IncomingMessagesTopicName": {
+      "Description": "Topic name",
+      "Value": { "Fn::GetAtt": ["SNSIncomingMessages", "TopicName"] }
+    },
+    "IncomingDeadMessagesQueueUrl": {
+      "Description": "Queue URL",
+      "Value": { "Ref": "SQSIncomingDeadMessages" }
+    },
+    "IncomingDeadMessagesQueueArn": {
+      "Description": "Queue ARN",
+      "Value": { "Fn::GetAtt": ["SQSIncomingDeadMessages", "Arn"] }
+    },
+    "OutgoingMessagesTopicUrl": {
+      "Description": "Queue URL",
+      "Value": { "Ref": "SQSOutgoingMessages" }
+    },
+    "OutgoingMessagesTopicArn": {
+      "Description": "Queue ARN",
+      "Value": { "Fn::GetAtt": ["SQSOutgoingMessages", "Arn"] }
+    },
+    "OutgoingMessagesTopicArn": {
+      "Description": "Topic ARN",
+      "Value": { "Ref": "SNSOutgoingMessages" }
+    },
+    "OutgoingMessagesTopicName": {
+      "Description": "Topic name",
+      "Value": { "Fn::GetAtt": ["SNSOutgoingMessages", "TopicName"] }
+    },
+    "OutgoingDeadMessagesTopicUrl": {
+      "Description": "Queue URL",
+      "Value": { "Ref": "SQSOutgoingDeadMessages" }
+    },
+    "OutgoingDeadMessagesTopicArn": {
+      "Description": "Queue ARN",
+      "Value": { "Fn::GetAtt": ["SQSOutgoingDeadMessages", "Arn"] }
     }
   }
 }
