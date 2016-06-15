@@ -3,7 +3,8 @@ Kenneth Falck <kennu@iki.fi> 2016
 
 ## Overview
 
-This is a basic boilerplate application for implementing Facebook chat bots.
+This is a basic boilerplate application for implementing AWS Lambda based
+chat bots that can talk with Facebook Messenger or Microsoft Bot Framework.
 
 ## Prerequisites
 
