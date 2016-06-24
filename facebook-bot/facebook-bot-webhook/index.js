@@ -86,6 +86,13 @@ function receivePostback(event) {
   }
 }
 
+function receiveOptIn(event) {
+  if (event.sender && event.sender.id) {
+    console.log('Received opt-in from user', event.sender.id, 'with ref', event.optin.ref)
+    return sendTextMessage(event.sender.id, "Hello! I'm a bot. Ask me anything you like.")
+  }
+}
+
 function receiveMessage(event) {
   console.log('Processing event:', event)
   if (event.sender && event.sender.id && event.message && event.message.text) {
@@ -103,6 +110,8 @@ function receiveMessages(entries) {
       promise = promise.then(() => {
         if (event.postback) {
           return receivePostback(event)
+        } else if (event.optin) {
+          return receiveOptIn(event)
         } else {
           return receiveMessage(event)
         }
