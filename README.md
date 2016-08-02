@@ -14,9 +14,12 @@ Install Node.js 4 or later and run:
 
 ## Initial setup
 
-Before you can deploy, you need to configure the Serverless project. Edit
-s-project.json and change the name to whatever you like. Then run
-these commands, using the tokens you got from Facebook:
+Before you can deploy, you need to configure the Serverless project.
+
+* Edit s-project.json and change the name to whatever you like.
+* Configure a Facebook app according to https://developers.facebook.com/docs/messenger-platform/quickstart
+
+Then run these commands, using the tokens you got from Facebook:
 
     sls project init
     sls variables set -t stage -s dev -k FACEBOOK_BOT_VERIFY_TOKEN -v (your verify token)
