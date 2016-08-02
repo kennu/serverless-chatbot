@@ -11,6 +11,9 @@ chat bots that can talk with Facebook Messenger or Microsoft Bot Framework.
 Install Node.js 4 or later and run:
 
     npm install
+    cd bot-logic && npm install && cd ..
+    cd facebook-bot && npm install && cd ..
+    cd microsoft-bot && npm install && cd ..
 
 ## Initial setup
 
